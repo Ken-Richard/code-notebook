@@ -47,19 +47,19 @@ Resources:
       Code:
         ZipFile: |
           def handler(event,context):
-            {
-              'body' => 'Hello World!'
-              'headers' => {
-                'Content-Type' => 'text/plain'
+            return {
+              'body': 'Hello there {0}'.format(event['requestContext']['identity']['sourceIp']),
+              'headers': {
+                'Content-Type': 'text/plain'
               },
-              'statusCode' => 200
+              'statusCode': 200
             }
       Description: "Code Note Book Function"
       FunctionName: !Ref "lambdaFunctionName"
       Handler: "index.handler"
       MemorySize: 128
       Role: !GetAtt "lambdaIAMRole.Arn"
-      Runtime: "ruby2.5"
+      Runtime: "python2.7"
       Timeout: 10
 
   lambdaApiGatewayInvoke:
